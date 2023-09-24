@@ -1,0 +1,122 @@
+* {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+body {
+  background-color: lightgray;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5px;
+  box-sizing: border-box;
+  gap: 5px;
+}
+
+.section {
+  border: 1px dashed darkgray;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+  padding-bottom: 10px;
+}
+
+.section h1 {
+  text-align: center;
+}
+
+.sprite-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  justify-items: center;
+}
+
+.sprite-container button {
+  display: flex;
+  flex-direction: column;
+  width: 100px;
+  height: 100px;
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+  border: 1px dotted lightblue;
+  border-radius: 5px;
+  position: relative;
+}
+
+.sprite-container button:hover {
+  background-color: rgb(230, 238, 255);
+}
+
+.sprite-container button:active {
+  background-color: rgb(220, 228, 255);
+}
+
+.sprite-container button > span {
+  position: absolute;
+  bottom: 4px;
+  left: 2%;
+  text-align: center;
+  width: 96%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  padding: 4px 0;
+}
+
+.sprite-container button.selected > span {
+  background-color: rgba(205, 205, 255, 0.8);
+  font-weight: bold;
+}
+
+.details {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 5px;
+}
+
+.details img {
+  width: 400px;
+}
+
+@media screen and (max-width: 1200px) {
+  .container {
+    width: 1000px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .sprite-container {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+
+  .sprite-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .details {
+    position: initial;
+  }
+}
