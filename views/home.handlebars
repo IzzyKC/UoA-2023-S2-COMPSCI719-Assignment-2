@@ -6,6 +6,12 @@
     <h1>All Pokemon</h1>
     <div class="sprite-container">
       {{! TODO Display list of Pokemon here. }}
+      {{#each allPokemons}}
+        <button>
+          <img src="{{smallImageUrl}}" />
+          <span>{{name}}</span>
+        </button>
+      {{/each}}
     </div>
   </div>
 
