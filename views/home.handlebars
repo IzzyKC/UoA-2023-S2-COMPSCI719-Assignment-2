@@ -7,7 +7,7 @@
     <div class="sprite-container">
       {{! TODO Display list of Pokemon here. }}
       {{#each allPokemons}}
-        <button>
+        <button value="{{dexNumber}}">
           <img src="{{smallImageUrl}}" />
           <span>{{name}}</span>
         </button>
@@ -19,6 +19,14 @@
     <div class="details">
       <h1>Details</h1>
       {{! TODO Display info about a single Pokemon here. }}
+      {{#if selectedPokemon}}
+        <img src="{{selectedPokemon.imageUrl}}">
+        <h2>#{{selectedPokemon.dexNumber}} {{selectedPokemon.name}}</h2>
+        <p><Strong>Types:</Strong>{{typesString}}</p>
+        <p><Strong>About {{selectedPokemon.name}}: </Strong>{{selectedPokemon.dexEntry}}</p>
+      {{else}}
+        <p><em>No favorite Pokemon!!!</em></p>
+      {{/if}}
     </div>
   </div>
 

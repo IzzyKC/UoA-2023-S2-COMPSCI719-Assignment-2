@@ -7,7 +7,10 @@ router.get("/", function (req, res) {
   const allPokemons = getAllPokemon();
   console.log(allPokemons.length);
   //console.log(allPokemons);
+  console.log(allPokemons[1]);
   res.locals.allPokemons = allPokemons;
+  res.locals.selectedPokemon = allPokemons[1];
+  res.locals.typesString = allPokemons[1].types.toString();
   res.render("home");
 });
 
