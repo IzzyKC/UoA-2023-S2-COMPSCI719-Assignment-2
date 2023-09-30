@@ -14,7 +14,7 @@ router.get('/:dexNumber', function (req, res){
     if(pokemonData){
         res.status(200).json(pokemonData);
     }else{
-        res.status(404).send(`pokemon (dexNumber:${queryDexNumber}) not Found!`);
+        res.status(404).send(`Pokemon (dexNumber:${queryDexNumber}) not Found!`);
     }
 });
 
