@@ -28,17 +28,19 @@ window.addEventListener("load", function () {
   async function setUpDetailsByDexNumber(dexNumber) {
     const detailsJson = await fetchDetailsByDexNumber(dexNumber);
     //update details div
-    updateSelectedPokemonDetails(detailsJson);
+    if(detailsJson){
+      updateSelectedPokemonDetails(detailsJson);
+    }
   }
 
   async function fetchDetailsByDexNumber(dexNumber) {
     const detailsResponseObj = await fetch(`./api/pokemon/${dexNumber}`);
+    const detailsJson = await detailsResponseObj.json();
     if(detailsResponseObj.ok){
-      const detailsJson = await detailsResponseObj.json();
       console.log(`details JSON: ${JSON.stringify(detailsJson)}`);
       return detailsJson;
     }else{
-      alert(`Error ${detailsResponseObj.status}: Pokemon(#${dexNumber}) not found!`);
+      alert(`Error ${detailsResponseObj.status}: ${JSON.stringify(detailsJson.result)}`);
     }
   }
 
