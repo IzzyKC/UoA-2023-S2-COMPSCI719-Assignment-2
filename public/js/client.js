@@ -3,15 +3,26 @@ window.addEventListener("load", function () {
   // detailed data about that Pokemon will be loaded from your own API, and displayed
   // in the appropriate place on the HTML page (overwriting any data which was already
   // there).
-
+  //get all pokemon list buttons
   const btnPokemons = document.querySelectorAll(".btn-pokemon");
-  //console.log(btnPokemons);
+  const prefix_button = "id-";
+
+  //initialise page
+  initialisePage();
+
+  //add pokemon buttons click event
   for (let i = 0; i < btnPokemons.length; i++) {
     btnPokemons[i].addEventListener("click", function (event) {
       const dexNumber = btnPokemons[i].value;
       console.log(`selected pokemon dexNumber: ${dexNumber}`);
       setUpDetailsByDexNumber(dexNumber);
     });
+  }
+
+  function initialisePage() {
+    const selectedDexNumber = document.querySelector("#detail-dexNumber").innerText;
+    //add selected class to selected pokemon button
+    document.querySelector(`#${prefix_button}${selectedDexNumber}`).classList.add("selected");
   }
 
   async function setUpDetailsByDexNumber(dexNumber) {
@@ -44,7 +55,17 @@ window.addEventListener("load", function () {
     document.querySelector("#detail-aboutName").innerText = detailsJson.name;
     //detail-dexEntry
     document.querySelector("#detail-dexEntry").innerText = detailsJson.dexEntry;
+    //remove all buttons selected class
+    removeAllButtonSelectedClass()
+    //add selected class to button
+    document.querySelector(`#${prefix_button}${detailsJson.dexNumber}`).classList.add("selected");
 
+  }
+
+  function removeAllButtonSelectedClass(){
+    btnPokemons.forEach(function(item){
+      item.classList.remove("selected");
+    });
   }
 
 });

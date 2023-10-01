@@ -7,7 +7,7 @@
     <div class="sprite-container">
       {{! TODO Display list of Pokemon here. }}
       {{#each allPokemons}}
-        <button class="btn-pokemon" value="{{dexNumber}}">
+        <button id="id-{{dexNumber}}" class="btn-pokemon" value="{{dexNumber}}">
           <img src="{{smallImageUrl}}" />
           <span>{{name}}</span>
         </button>
