@@ -12,9 +12,13 @@ router.get("/", function (req, res) {
   const randomFavoritePokemonIndex = Math.floor((Math.random() * allPokemons.length));
   console.log(allPokemons[randomFavoritePokemonIndex]);
   //details: favorite pokemon(randomly pick index)
-  res.locals.favoritePokemon = allPokemons[randomFavoritePokemonIndex];
-  //convert types array to string
-  res.locals.typesString = allPokemons[randomFavoritePokemonIndex].types.toString();
+  const favoritePokemonDetail = allPokemons[randomFavoritePokemonIndex];
+  res.locals.detailImg = favoritePokemonDetail.imageUrl;
+  res.locals.dexNumber = favoritePokemonDetail.dexNumber;
+  res.locals.name = favoritePokemonDetail.name;
+  res.locals.types = favoritePokemonDetail.types.toString();
+  res.locals.about = favoritePokemonDetail.nmae;
+  res.locals.dexEntry = favoritePokemonDetail.dexEntry;
   res.render("home");
 });
 
