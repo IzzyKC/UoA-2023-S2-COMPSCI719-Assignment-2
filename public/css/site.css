@@ -20,6 +20,33 @@ body {
   gap: 5px;
 }
 
+.manual {
+  text-align: center;
+  margin: 15px;
+}
+
+#txtDexNumber {
+  width: 150px;
+}
+
+#errMsg {
+  color: red;
+  font-size: 12;
+  font-style: italic;
+}
+
+#addPokemon {
+  color: white;
+  text-shadow: -1px 0 rgb(13, 6, 19), 0 1px rgb(13, 6, 19), 1px 0 rgb(13, 6, 19), 0 -1px rgb(13, 6, 19);
+  text-align: center;
+  background-color: rgb(85, 85, 143);
+  border-radius: 5px;
+  border: 2px sloid darkgray;
+  padding: 5px;
+  font-weight: bolder;
+  font-size: 14;
+}
+
 .section {
   border: 1px dashed darkgray;
   border-radius: 10px;
