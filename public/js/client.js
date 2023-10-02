@@ -48,7 +48,7 @@ window.addEventListener("load", function () {
     }else {
       const repeatPokemon = document.querySelector(`#${prefix_button}${strDexNumber}`);
       if (repeatPokemon) {
-        errMsg.innerText = `#${strDexNumber} already exist! Please try again! `;
+        errMsg.innerText = `#${strDexNumber} already exist! Please try again!`;
         return false;
       }
     }
