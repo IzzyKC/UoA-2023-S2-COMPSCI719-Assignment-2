@@ -39,13 +39,13 @@ window.addEventListener("load", function () {
     const errMsg = document.querySelector("#errMsg");
     //clear error messaeg
     errMsg.innerText = "";
-    if(Number.isNaN(intDexNumber) || strDexNumber.indexOf(".") >= 0){
+    if (Number.isNaN(intDexNumber) || strDexNumber.indexOf(".") >= 0) {
       errMsg.innerText = "Invalid input! Please enter a valid dexNumber from Interger 1 to 1010!";
       return false;
-    }else if(intDexNumber < 1 || intDexNumber > 1010){
+    } else if (intDexNumber < 1 || intDexNumber > 1010) {
       errMsg.innerText = "Out of range! Please enter a valid dexNumber from Interger 1 to 1010!";
       return false;
-    }else {
+    } else {
       const repeatPokemon = document.querySelector(`#${prefix_button}${strDexNumber}`);
       if (repeatPokemon) {
         errMsg.innerText = `#${strDexNumber} already exist! Please try again!`;
@@ -57,28 +57,47 @@ window.addEventListener("load", function () {
 
   async function addNewPokeFromAPI(dexNumber) {
     const newPokemonJson = await getNewPokeFromAPI(dexNumber);
-    const addNewPokeResponseObj = await fetch(`./addNewPoke/${encodeURIComponent(JSON.stringify(newPokemonJson))}`);
-    
-   
+    const addNewPokeResponseObj = await fetch(`./api/pokemon/addNewPoke/${encodeURIComponent(JSON.stringify(newPokemonJson))}`);
+    const addNewPokeResponseJson = await addNewPokeResponseObj.json();
+    if (addNewPokeResponseObj.ok) {
+      addNewPokemonButton(newPokemonJson);
+      updateSelectedPokemonDetails(newPokemonJson);
+    }
+    document.querySelector("#errMsg").innerText = JSON.stringify(addNewPokeResponseJson.result);
+  }
+
+  function addNewPokemonButton(newPokemonJson) {
+    //#sprite-container
+    const btnContainer = document.querySelector(".sprite-container");
+    console.log(btnContainer.innerHTML);
+    btnContainer.innerHTML +=
+      `<button id="id-${newPokemonJson.dexNumber}" class="btn-pokemon" 
+        value="${newPokemonJson.dexNumber}">
+        <img src="${newPokemonJson.smallImageUrl}" />
+        <span>${newPokemonJson.name}</span>
+      </button>`;
+    const newPokeButton = document.addEventListener("click", function(event){
+      setUpDetailsByDexNumber(newPokemonJson.dexNumber);
+    }) 
   }
 
   async function getNewPokeFromAPI(dexNumber) {
     const pokemon = await fetchPokemonFromAPI(dexNumber);
     console.log(pokemon);
     const pokeSpecies = await fecthPokeSpeciesFromAPI(dexNumber);
-    console.log(pokeSpecies.flavor_text_entries);
+    //console.log(pokeSpecies.flavor_text_entries);
     const name = pokemon.species.name;
     const smallImageUrl = pokemon.sprites.front_default;
-    const imageUrl = pokemon.sprites.other.home.front_default ? 
+    const imageUrl = pokemon.sprites.other.home.front_default ?
       pokemon.sprites.other.home.front_default : pokemon.sprites.front_default;
-    const latestFlavorText = getLatestFlavorText(pokeSpecies.flavor_text_entries); 
+    const latestFlavorText = getLatestFlavorText(pokeSpecies.flavor_text_entries);
     const newPoke = {
-      dexNumber : parseInt(dexNumber),
-      name : name.charAt(0).toUpperCase() + name.slice(1),
-      imageUrl : imageUrl,
-      smallImageUrl :smallImageUrl,
-      types : makeTypesArray(pokemon.types),
-      dexEntry : latestFlavorText
+      dexNumber: parseInt(dexNumber),
+      name: name.charAt(0).toUpperCase() + name.slice(1),
+      imageUrl: imageUrl,
+      smallImageUrl: smallImageUrl,
+      types: makeTypesArray(pokemon.types),
+      dexEntry: latestFlavorText
     };
 
     //check data content
@@ -89,7 +108,7 @@ window.addEventListener("load", function () {
 
   function makeTypesArray(types) {
     const typesArray = [];
-    for(let i=0; i < types.length; i++){
+    for (let i = 0; i < types.length; i++) {
       typesArray[i] = types[i].type.name;
     }
     return typesArray;
@@ -97,8 +116,8 @@ window.addEventListener("load", function () {
 
   function getLatestFlavorText(flavor_text_entries) {
     let latestFlavorText = "";
-    for(let i = flavor_text_entries.length-1; i >=0; i--){
-      if(flavor_text_entries[i].language.name == "en"){
+    for (let i = flavor_text_entries.length - 1; i >= 0; i--) {
+      if (flavor_text_entries[i].language.name == "en") {
         latestFlavorText = flavor_text_entries[i].flavor_text;
         break;
       }
@@ -158,7 +177,9 @@ window.addEventListener("load", function () {
   }
 
   function removeAllButtonSelectedClass() {
-    btnPokemons.forEach(function (item) {
+    const allPokemonButtons = document.querySelectorAll(".btn-pokemon");
+    console.log(`remove selected class: ${allPokemonButtons.length}`);
+    allPokemonButtons.forEach(function (item) {
       item.classList.remove("selected");
     });
   }

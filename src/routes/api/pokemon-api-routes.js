@@ -1,5 +1,5 @@
 const express = require("express");
-const { getPokemonByDexNumber } = require("../../db/pokemon-db");
+const { getPokemonByDexNumber, getAllPokemon, writePokemonByJson } = require("../../db/pokemon-db");
 const router = express.Router();
 
 // TODO Add an API endpoint here.
@@ -18,5 +18,24 @@ router.get('/:dexNumber', function (req, res){
         res.status(404).send({result:`Pokemon (dexNumber:${queryDexNumber}) not Found!`});
     }
 });
+
+router.get("/addNewPoke/:newPokeJson", function (req, res) {
+    let message = "";
+    try {
+      const allPokemons = getAllPokemon();
+      //const allPokemonsJson = JSON.parse(allPokemons);
+      const newPokeJson = JSON.parse(req.params.newPokeJson);
+      allPokemons.push(newPokeJson);
+      
+      console.log(allPokemons.length);
+      console.log(allPokemons[allPokemons.length-1]);
+      writePokemonByJson(allPokemons);
+      message = `add #${newPokeJson.dexNumber} ${newPokeJson.name} successfully!`;
+      res.status(200).send({result:`${message}`});
+    } catch (error) {
+      console.log(error);
+      res.status(404).send({result:`${error}`});
+    }
+  });
 
 module.exports = router;

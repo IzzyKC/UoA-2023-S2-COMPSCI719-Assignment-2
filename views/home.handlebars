@@ -5,16 +5,12 @@
     <div class="section">
 
     <h1>All Pokemon</h1>
-    <div class="manual">
-      <input placeholder="Enter dexNumber" type="number" min="1" max="1010" step="1" 
-        id="txtDexNumber" name="txtDexNumber">
-      <button id="addPokemon" type="submit">Add New (from PokeAPI)</button>
-      <p><span id="errMsg"></span></span></p>
-      {{#if addPokemonMessage}}
-        <p><em>{{addPokemonMessage}}</em></p>
-      {{/if}}
-
-    </div>
+      <div class="manual">
+        <input placeholder="Enter dexNumber" type="number" min="1" max="1010" step="1" 
+          id="txtDexNumber" name="txtDexNumber">
+        <button id="addPokemon" type="submit">Add New (from PokeAPI)</button>
+        <p><span id="errMsg"></span></span></p>
+      </div>
     
     <div class="sprite-container">
       {{! TODO Display list of Pokemon here. }}
