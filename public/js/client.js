@@ -3,22 +3,13 @@ window.addEventListener("load", function () {
   // detailed data about that Pokemon will be loaded from your own API, and displayed
   // in the appropriate place on the HTML page (overwriting any data which was already
   // there).
-  //get all pokemon list buttons
-  const btnPokemons = document.querySelectorAll(".btn-pokemon");
   const btnAddPoke = document.querySelector("#addPokemon");
   const prefix_button = "id-";
 
   //initialise page
   initialisePage();
 
-  //add pokemon buttons click event
-  for (let i = 0; i < btnPokemons.length; i++) {
-    btnPokemons[i].addEventListener("click", function (event) {
-      const dexNumber = btnPokemons[i].value;
-      console.log(`selected pokemon dexNumber: ${dexNumber}`);
-      setUpDetailsByDexNumber(dexNumber);
-    });
-  }
+  
 
   btnAddPoke.addEventListener("click", function (event) {
     const newDexNumber = document.querySelector("#txtDexNumber").value;
@@ -32,6 +23,20 @@ window.addEventListener("load", function () {
     const selectedDexNumber = document.querySelector("#detail-dexNumber").innerText;
     //add selected class to selected pokemon button
     addSelectedClassToButton(`${prefix_button}${selectedDexNumber}`);
+    allPokeButtonClickEventListener();
+  }
+
+  function allPokeButtonClickEventListener(){
+    const allPokeBtns = document.querySelectorAll(".btn-pokemon");
+    //add pokemon buttons click event
+    for (let i = 0; i < allPokeBtns.length; i++) {
+      allPokeBtns[i].addEventListener("click", function (event) {
+      const dexNumber = allPokeBtns[i].value;
+      console.log(`selected pokemon dexNumber: ${dexNumber}`);
+      setUpDetailsByDexNumber(dexNumber);
+    });
+  }
+
   }
 
   function validNewDexNumber(strDexNumber) {
@@ -67,18 +72,21 @@ window.addEventListener("load", function () {
   }
 
   function addNewPokemonButton(newPokemonJson) {
-    //#sprite-container
     const btnContainer = document.querySelector(".sprite-container");
-    console.log(btnContainer.innerHTML);
-    btnContainer.innerHTML +=
-      `<button id="id-${newPokemonJson.dexNumber}" class="btn-pokemon" 
-        value="${newPokemonJson.dexNumber}">
-        <img src="${newPokemonJson.smallImageUrl}" />
-        <span>${newPokemonJson.name}</span>
-      </button>`;
-    const newPokeButton = document.addEventListener("click", function(event){
+    const newPokeButton = document.createElement("button");
+    newPokeButton.id = `${prefix_button}${newPokemonJson.dexNumber}`;
+    newPokeButton.classList.add("btn-pokemon");
+    newPokeButton.value = newPokemonJson.dexNumber;
+    const image = document.createElement("img");
+    image.src = newPokemonJson.smallImageUrl;
+    newPokeButton.appendChild(image);
+    const span = document.createElement("span");
+    span.innerText = newPokemonJson.name;
+    newPokeButton.appendChild(span);
+    newPokeButton.addEventListener("click", function(event){
       setUpDetailsByDexNumber(newPokemonJson.dexNumber);
-    }) 
+    }); 
+    btnContainer.appendChild(newPokeButton);
   }
 
   async function getNewPokeFromAPI(dexNumber) {
