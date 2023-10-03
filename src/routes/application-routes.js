@@ -8,9 +8,6 @@ router.get("/", function (req, res) {
   console.log(allPokemons.length);
   //all pokemon list
   res.locals.allPokemons = allPokemons;
-  //const randomFavoritePokemonIndex = Math.floor((Math.random() * allPokemons.length));
-  //console.log(allPokemons[randomFavoritePokemonIndex]);
-  //details: favorite pokemon(randomly pick index)
   //pick last index as my favorite pokemon
   const favoritePokemonDetail = allPokemons[allPokemons.length-1];
   res.locals.detailImg = favoritePokemonDetail.imageUrl;
@@ -19,22 +16,31 @@ router.get("/", function (req, res) {
   res.locals.types = favoritePokemonDetail.types.toString();
   res.locals.about = favoritePokemonDetail.nmae;
   res.locals.dexEntry = favoritePokemonDetail.dexEntry;
+
+  /*
+  console.log("19"+req.cookies.addNewPokeMessage);
+  res.locals.addPokemonMessage = req.cookies.addNewPokeMessage;
+  res.clearCookie("addNewPokeMessage");
+  */
+
   res.render("home");
 });
 
 router.get("/addNewPoke/:newPokeJson", function (req, res) {
+  let message = "";
   try {
     const newPokeJson = JSON.parse(req.params.newPokeJson);
     console.log(newPokeJson);
-    res.locals.dexNumber = newPokeJson.dexNumber;
-    res.locals.addPokemonMessage = newPokeJson.name;
+    console.log(newPokeJson.dexNumber);
+    console.log(newPokeJson.name);
+    //writePokemonByJson(newPokeJson);
+    message = `add #${newPokeJson.dexNumber} ${newPokeJson.name} successfully!`;
   } catch (error) {
-    res.locals.addPokemonMessage = error;
+    message = error;
     console.log(error);
   }finally{
-    console.log("finally");
-    //res.redirect("/?resut=");
-    res.render("home");
+    console.log(message);
+    res.redirect("/");
   }
 });
 

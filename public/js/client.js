@@ -67,13 +67,14 @@ window.addEventListener("load", function () {
     console.log(pokemon);
     const pokeSpecies = await fecthPokeSpeciesFromAPI(dexNumber);
     console.log(pokeSpecies.flavor_text_entries);
+    const name = pokemon.species.name;
     const smallImageUrl = pokemon.sprites.front_default;
     const imageUrl = pokemon.sprites.other.home.front_default ? 
       pokemon.sprites.other.home.front_default : pokemon.sprites.front_default;
     const latestFlavorText = getLatestFlavorText(pokeSpecies.flavor_text_entries); 
     const newPoke = {
       dexNumber : parseInt(dexNumber),
-      name : pokemon.species.name,
+      name : name.charAt(0).toUpperCase() + name.slice(1),
       imageUrl : imageUrl,
       smallImageUrl :smallImageUrl,
       types : makeTypesArray(pokemon.types),
