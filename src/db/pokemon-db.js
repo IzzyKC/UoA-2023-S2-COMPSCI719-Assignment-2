@@ -12,11 +12,12 @@ function getPokemonByDexNumber(dexNumber) {
   return list.find((p) => p.dexNumber == dexNumber);
 }
 
-function writePokemonJsonToFile(pokemonJson){
+function writePokemonByJson(pokemonJson){
   writeJson(pokemonJson, POKEMON_FILE_NAME);
 }
 
 module.exports = {
   getAllPokemon,
   getPokemonByDexNumber,
+  writePokemonByJson,
 };

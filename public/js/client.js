@@ -55,8 +55,69 @@ window.addEventListener("load", function () {
     return true;
   }
 
-  function addNewPokeFromAPI(dexNumber) {
-    alert("addNewPokeFromAPI");
+  async function addNewPokeFromAPI(dexNumber) {
+    const newPokemonJson = await getNewPokeFromAPI(dexNumber);
+    const addNewPokeResponseObj = await fetch(`./addNewPoke/${encodeURIComponent(JSON.stringify(newPokemonJson))}`);
+    
+   
+  }
+
+  async function getNewPokeFromAPI(dexNumber) {
+    const pokemon = await fetchPokemonFromAPI(dexNumber);
+    console.log(pokemon);
+    const pokeSpecies = await fecthPokeSpeciesFromAPI(dexNumber);
+    console.log(pokeSpecies.flavor_text_entries);
+    const smallImageUrl = pokemon.sprites.front_default;
+    const imageUrl = pokemon.sprites.other.home.front_default ? 
+      pokemon.sprites.other.home.front_default : pokemon.sprites.front_default;
+    const latestFlavorText = getLatestFlavorText(pokeSpecies.flavor_text_entries); 
+    const newPoke = {
+      dexNumber : parseInt(dexNumber),
+      name : pokemon.species.name,
+      imageUrl : imageUrl,
+      smallImageUrl :smallImageUrl,
+      types : makeTypesArray(pokemon.types),
+      dexEntry : latestFlavorText
+    };
+
+    //check data content
+    console.log(newPoke);
+    //console.log(JSON.stringify(newPoke));
+    return newPoke;
+  }
+
+  function makeTypesArray(types) {
+    const typesArray = [];
+    for(let i=0; i < types.length; i++){
+      typesArray[i] = types[i].type.name;
+    }
+    return typesArray;
+  }
+
+  function getLatestFlavorText(flavor_text_entries) {
+    let latestFlavorText = "";
+    for(let i = flavor_text_entries.length-1; i >=0; i--){
+      if(flavor_text_entries[i].language.name == "en"){
+        latestFlavorText = flavor_text_entries[i].flavor_text;
+        break;
+      }
+    }
+    //console.log(latestFlavorText);
+    latestFlavorText = latestFlavorText.replaceAll("\n", " ");
+    console.log(latestFlavorText);
+    return latestFlavorText;
+  }
+
+  async function fetchPokemonFromAPI(dexNumber) {
+    const pokemonResponseObj = await fetch(`https://pokeapi.co/api/v2/pokemon/${dexNumber}`);
+    const pokemonJson = await pokemonResponseObj.json();
+    return pokemonJson;
+  }
+
+  async function fecthPokeSpeciesFromAPI(dexNumber) {
+    const pokeSpeciesResponseObj = await fetch(` https://pokeapi.co/api/v2/pokemon-species/${dexNumber}`);
+    const pokemonSpeciesJson = await pokeSpeciesResponseObj.json();
+    return pokemonSpeciesJson;
   }
 
   async function setUpDetailsByDexNumber(dexNumber) {
