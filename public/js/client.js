@@ -93,7 +93,7 @@ window.addEventListener("load", function () {
     const pokemon = await fetchPokemonFromAPI(dexNumber);
     console.log(pokemon);
     const pokeSpecies = await fecthPokeSpeciesFromAPI(dexNumber);
-    //console.log(pokeSpecies.flavor_text_entries);
+    console.log(pokeSpecies);
     const name = pokemon.species.name;
     const smallImageUrl = pokemon.sprites.front_default;
     const imageUrl = pokemon.sprites.other.home.front_default ?

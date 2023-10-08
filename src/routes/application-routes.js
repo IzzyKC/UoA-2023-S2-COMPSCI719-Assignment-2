@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllPokemon, writePokemonByJson } = require("../db/pokemon-db");
+const { getAllPokemon } = require("../db/pokemon-db");
 const router = express.Router();
 
 router.get("/", function (req, res) {
