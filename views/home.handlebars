@@ -14,8 +14,9 @@
     
     <div class="sprite-container">
       {{! TODO Display list of Pokemon here. }}
+      <!--use html data attribute: data-dex-number="{{dexNumber}}", removes value="{{dexNumber}}"-->
       {{#each allPokemons}}
-        <button id="id-{{dexNumber}}" class="btn-pokemon" value="{{dexNumber}}">
+        <button id="id-{{dexNumber}}" data-dex-number="{{dexNumber}}" class="btn-pokemon">
           <img src="{{smallImageUrl}}" />
           <span>{{name}}</span>
         </button>

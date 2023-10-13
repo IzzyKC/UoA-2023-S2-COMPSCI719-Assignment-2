@@ -20,19 +20,26 @@ window.addEventListener("load", function () {
   });
 
   function initialisePage() {
-    const selectedDexNumber = document.querySelector("#detail-dexNumber").innerText;
-    //add selected class to selected pokemon button
-    addSelectedClassToButton(`${prefix_button}${selectedDexNumber}`);
+    const detailDexNumber = document.querySelector("#detail-dexNumber");
+    if(detailDexNumber){
+      const selectedDexNumber = detailDexNumber.innerText;
+      console.log(`initialise detail poke dexNumber: ${selectedDexNumber}`);
+      //add selected class to selected pokemon button
+      addSelectedClassToButton(`${prefix_button}${selectedDexNumber}`);
+    }
     allPokeButtonClickEventListener();
   }
 
   function allPokeButtonClickEventListener(){
     const allPokeBtns = document.querySelectorAll(".btn-pokemon");
+    if(!allPokeBtns) return;
+    console.log(`all pokemon buttons: ${allPokeBtns.length}`);
     //add pokemon buttons click event
     for (let i = 0; i < allPokeBtns.length; i++) {
       allPokeBtns[i].addEventListener("click", function (event) {
-      const dexNumber = allPokeBtns[i].value;
-      console.log(`selected pokemon dexNumber: ${dexNumber}`);
+      //const dexNumber = allPokeBtns[i].value;
+      const dexNumber = allPokeBtns[i].dataset.dexNumber;
+      console.log(`btn-dex-number: ${dexNumber}`);
       setUpDetailsByDexNumber(dexNumber);
     });
   }
@@ -76,7 +83,8 @@ window.addEventListener("load", function () {
     const newPokeButton = document.createElement("button");
     newPokeButton.id = `${prefix_button}${newPokemonJson.dexNumber}`;
     newPokeButton.classList.add("btn-pokemon");
-    newPokeButton.value = newPokemonJson.dexNumber;
+    //newPokeButton.value = newPokemonJson.dexNumber;
+    newPokeButton.dataset.dexNumber = newPokemonJson.dexNumber;
     const image = document.createElement("img");
     image.src = newPokemonJson.smallImageUrl;
     newPokeButton.appendChild(image);
@@ -96,6 +104,7 @@ window.addEventListener("load", function () {
     console.log(pokeSpecies);
     const name = pokemon.species.name;
     const smallImageUrl = pokemon.sprites.front_default;
+    //if no images exists, use small image instead
     const imageUrl = pokemon.sprites.other.home.front_default ?
       pokemon.sprites.other.home.front_default : pokemon.sprites.front_default;
     const latestFlavorText = getLatestFlavorText(pokeSpecies.flavor_text_entries);
@@ -186,7 +195,7 @@ window.addEventListener("load", function () {
 
   function removeAllButtonSelectedClass() {
     const allPokemonButtons = document.querySelectorAll(".btn-pokemon");
-    console.log(`remove selected class: ${allPokemonButtons.length}`);
+    console.log(`remove selected class count: ${allPokemonButtons.length}`);
     allPokemonButtons.forEach(function (item) {
       item.classList.remove("selected");
     });
