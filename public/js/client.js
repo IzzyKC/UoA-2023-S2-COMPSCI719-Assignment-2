@@ -69,7 +69,7 @@ window.addEventListener("load", function () {
 
   async function addNewPokeFromAPI(dexNumber) {
     const newPokemonJson = await getNewPokeFromAPI(dexNumber);
-    const addNewPokeResponseObj = await fetch(`./api/pokemon/addNewPoke/${encodeURIComponent(JSON.stringify(newPokemonJson))}`);
+    const addNewPokeResponseObj = await fetch(`http://localhost:3000/api/pokemon/addNewPoke/${encodeURIComponent(JSON.stringify(newPokemonJson))}`);
     const addNewPokeResponseJson = await addNewPokeResponseObj.json();
     if (addNewPokeResponseObj.ok) {
       addNewPokemonButton(newPokemonJson);
@@ -165,7 +165,7 @@ window.addEventListener("load", function () {
   }
 
   async function fetchDetailsByDexNumber(dexNumber) {
-    const detailsResponseObj = await fetch(`./api/pokemon/${dexNumber}`);
+    const detailsResponseObj = await fetch(`http://localhost:3000/api/pokemon/${dexNumber}`);
     const detailsJson = await detailsResponseObj.json();
     if (detailsResponseObj.ok) {
       console.log(`details JSON: ${JSON.stringify(detailsJson)}`);
