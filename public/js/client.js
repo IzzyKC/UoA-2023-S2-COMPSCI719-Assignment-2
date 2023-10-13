@@ -82,9 +82,8 @@ window.addEventListener("load", function () {
     const btnContainer = document.querySelector(".sprite-container");
     const newPokeButton = document.createElement("button");
     newPokeButton.id = `${prefix_button}${newPokemonJson.dexNumber}`;
-    newPokeButton.classList.add("btn-pokemon");
-    //newPokeButton.value = newPokemonJson.dexNumber;
     newPokeButton.dataset.dexNumber = newPokemonJson.dexNumber;
+    newPokeButton.classList.add("btn-pokemon");
     const image = document.createElement("img");
     image.src = newPokemonJson.smallImageUrl;
     newPokeButton.appendChild(image);
